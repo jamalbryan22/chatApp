@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <style>
+          @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&display=swap');
+
+          * {
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+          }
+
+          body {
+               text-align: center;
+               font-family: Arial, Helvetica, sans-serif;
+               background-color: rgb(83, 80, 235);
+               height: 100vh;
+          }
+
+          h1 {
+               font-family: Lobster;
+               font-size: 5rem;
+               margin-bottom: .5rem;
+               margin: 3rem;
+          }
+
+          form {
+               display: flex;
+               flex-direction: column;
+               width: 40%;
+               height: 70%;
+               margin: auto;
+          }
+
+          form button {
+               width: 20%;
+               margin: 0 auto;
+               font-size: 2rem;
+          }
+
+          label {
+               font-size: 2rem;
+          }
+
+          input {
+               margin-bottom: 1.5rem;
+               font-size: 2rem;
+          }
+     </style>
+</head>
+
+<body>
+     <h1> Join </h1>
+     <form action='/chat.html'>
+          <label for="displayName">Display Name</label>
+          <input type="text" name="username" placeholder="Enter your display name" required>
+          <label for="room">Room</label>
+          <input type="text" name='room' placeholder="Room" required>
+          <button>Join</button>
+     </form>
+</body>
+
+</html>
