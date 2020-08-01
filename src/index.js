@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http')
 const chalk = require('chalk');
 const path = require('path');
-const { generateMessage, generateLocationMessage } = require('../utlis/messages')
+const { generateMessage, generateLocationMessage } = require('../utils/messages')
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 
@@ -16,12 +16,8 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-let count = 0;
-let message = 'Welcome';
-
 io.on('connection', (socket) => {
      console.log('New websocket connection')
-
 
      socket.on('join', ({ username, room }) => {
           socket.join(room)

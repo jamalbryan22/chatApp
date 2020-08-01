@@ -5,12 +5,14 @@ const userInputField = document.getElementById('user-message');
 const locationButton = document.getElementById('find-me');
 const messageDisplay = document.getElementById('message-display');
 
+
 // Templates
 const messageTemplate = document.getElementById('message-template').innerHTML
 const locationMessageTemplate = document.getElementById('location-message-template').innerHTML
 
 // Options
-const { username, room } = qs.parse(location.search, { ignoreQueryPrefix: true })
+const username = location.search.substring(1).split('&')[0].split('=')[1];
+const room = location.search.substring(1).split('&')[1].split('=')[1];
 
 socket.on('message', (message) => {
      console.log(message.text)
