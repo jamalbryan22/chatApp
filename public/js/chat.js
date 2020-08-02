@@ -9,28 +9,64 @@ const messageDisplay = document.getElementById('message-display');
 // Templates
 const messageTemplate = document.getElementById('message-template').innerHTML
 const locationMessageTemplate = document.getElementById('location-message-template').innerHTML
+const sideBarTemplate = document.getElementById('sidebar-template').innerHTML
 
 // Options
 const username = location.search.substring(1).split('&')[0].split('=')[1];
 const room = location.search.substring(1).split('&')[1].split('=')[1];
 
+// AutoScroll Behavior
+const autoscroll = () => {
+     // New message element
+     const newMessage = messageDisplay.lastElementChild
+
+
+     // Height of the new message
+     const newMessageStyles = getComputedStyle(newMessage)
+     const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+     const newMessageHeight = newMessage.offsetHeight + newMessageMargin
+
+     // Visible height
+     const visibleHeight = newMessage.offsetHeight
+
+     // Height of messages container
+     const containerHeight = newMessage.scrollHeight
+
+     // How far have I scrolled?
+     const scrollOffset = newMessage.scrollTop + visibleHeight
+
+     if (containerHeight - newMessageHeight <= scrollOffset) {
+          newMessage.scrollTop = newMessage.scrollHeight
+     }
+}
+
 socket.on('message', (message) => {
-     console.log(message.text)
      const html = Mustache.render(messageTemplate, {
+          username: message.username,
           message: message.text,
           createdAt: message.createdAt
      });
      messageDisplay.insertAdjacentHTML('beforeend', html);
+     autoscroll()
 })
+
 socket.on('locationMessage', (message) => {
-     console.log(message)
      const html = Mustache.render(locationMessageTemplate, {
+          username: message.username,
           url: message.url,
           createdAt: message.createdAt
      })
      messageDisplay.insertAdjacentHTML('beforeend', html);
+     autoscroll()
 })
 
+socket.on('roomData', (data) => {
+     const html = Mustache.render(sideBarTemplate, {
+          room: data.room,
+          users: data.users
+     })
+     document.getElementById('sidebar').innerHTML = html
+})
 
 
 form.addEventListener('submit', (e) => {
@@ -93,7 +129,13 @@ function geoFindMe() {
 
 }
 
-socket.emit('join', { username, room })
+socket.emit('join', { username, room }, (error) => {
+     if (error) {
+          alert(error);
+          location.href = '/'
+     }
+
+})
 
 document.querySelector('#find-me').addEventListener('click', geoFindMe);
 

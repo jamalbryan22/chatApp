@@ -65,6 +65,13 @@
                margin: auto;
           }
 
+          #sidebar {
+               background: white;
+               font-family: Lobster;
+               font-size: 1rem;
+               margin-bottom: .5rem;
+          }
+
           form {
                display: flex;
                flex-direction: column;
@@ -115,12 +122,13 @@
                     </form>
                </div>
           </div>
+          <div id="sidebar"></div>
      </div>
 
      <script id="message-template" type="text/html">
           <div>
                <hr>
-               <p>{{createdAt}} - {{message}}</p>
+               <p>{{createdAt}} - {{username}}:{{message}}</p>
                <br>
           </div>
      </script>
@@ -128,8 +136,20 @@
      <script id="location-message-template" type="text/html">
           <div>
                <hr>
-               <p>{{createdAt}} - <a href="{{url}}" target="_blank">My current location</a></p>
+               <p>{{createdAt}} - <a href="{{url}}" target="_blank">{{username}}'s current location</a></p>
                <br>
+          </div>
+     </script>
+
+     <script id="sidebar-template" type="text/html">
+          <div>
+               <h2 class="room-title">{{room}}</h2>
+               <h3 class="list-title">Users</h3>
+               <ul class="users">
+                    {{#users}}
+                         <li>{{username}}</li>
+                    {{/users}}
+               </ul>
           </div>
      </script>
 
